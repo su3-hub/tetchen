@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import User from "../model/user.js"
 import catchAsync from "../utils/catchAsync.js";
 import ExpressError from "../utils/ExpressError.js";
-import { userRegistrationSchema, loginSchema } from "../../shared/schemas/userSchema.js"
+import { userRegistrationSchema, loginSchema } from "../schemas/userSchema.js"
 
 const router = express.Router();
 const saltRounds = 10;

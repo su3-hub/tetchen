@@ -6,7 +6,7 @@ import { storage } from '../cloudinary/index.js';
 import { cloudinary } from '../cloudinary/index.js';
 import ExpressError from '../utils/ExpressError.js';
 import { verifyToken, isAuthor, isRecipeAuthor } from "../middlewares.js";
-import { recipeSchema } from "../../shared/schemas/recipeSchema.js";
+import { recipeSchema } from "../schemas/recipeSchema.js";
 
 const upload = multer({ storage });
 const router = express.Router();
