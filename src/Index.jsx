@@ -26,6 +26,7 @@ export default function Index() {
             setIsLoading(true);
             try {
                 const { data } = await api.get('/recipes');
+                console.log('RES.DATA: ',data);
                 setRawData(data);
                 setError(null);
             } catch (error) {
