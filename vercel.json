@@ -2,7 +2,7 @@
   "routes": [
     { 
       "source": "/(.*)",
-      "destination": "/dist/index.html" 
+      "destination": "/" 
     }
   ]
 }
