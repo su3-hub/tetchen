@@ -10,7 +10,7 @@ import { initialRecipe } from './utils/data';
 import { useAtom } from "jotai";
 import { userAtom } from "./context/jotai.js";
 import * as z from "zod";
-import { recipeSchema } from '../../shared/schemas/recipeSchema.js';
+import { recipeSchema } from '@monorepo/shared/schemas/recipeSchema.js';
 
 export default function CreateRecipe() {
     const [recipe, setRecipe] = useState(initialRecipe);
