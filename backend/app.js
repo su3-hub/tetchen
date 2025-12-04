@@ -64,8 +64,8 @@ app.use(helmet({
  }));
 
 // routing
-app.use('/api/recipes', recipeRoutes);
-app.use('/api/user', userRoutes);
+app.use('/recipes', recipeRoutes);
+app.use('/user', userRoutes);
 
 app.all(/(.*)/, (req, res, next) => {
     return next(new ExpressError('That Page Not Found!', 404))
