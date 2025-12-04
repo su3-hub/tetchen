@@ -2,11 +2,11 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "destination": "backend/app.js"
+      "dest": "backend/app.js"
     },
     {
       "src": "/(.*)",
-      "destination": "/",
+      "dest": "/",
       "status": 200
     }
   ]
