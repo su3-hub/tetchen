@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "concurrently \"npm run dev\" \"nodemon ../backend/app.js\""
+    "start": "concurrently \"pnpm run dev\" \"nodemon backend/app.js\""
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.16",
