@@ -1,8 +1,13 @@
 {
-  "rewrites": [
-    { 
-      "source": "/(.*)",
-      "destination": "/" 
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "destination": "backend/app.js"
+    },
+    {
+      "src": "/(.*)",
+      "destination": "/",
+      "status": 200
     }
   ]
 }
