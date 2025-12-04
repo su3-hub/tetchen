@@ -34,7 +34,6 @@ router.route("/register")
 
 router.route("/login")
     .post(catchAsync (async (req, res) => {
-        console.log('BACKEND PROCESSING')
         const result = loginSchema.safeParse(req.body);
         if (!result.success) {
             throw new ExpressError("入力内容についてエラーが発生しました。入力内容を確認してください。", 400);
