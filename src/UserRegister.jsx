@@ -5,7 +5,7 @@ import { useAtom } from "jotai";
 import { userAtom } from "./context/jotai";
 import ErrorOverlay from "./components/ErrorOverlay";
 import * as z from "zod";
-import { userRegistrationSchema } from "../../shared/schemas/userSchema";
+import { userRegistrationSchema } from "../shared/schemas/userSchema";
 
 export default function UserRegister() {
     const [registerElements, setRegisterElements] = useState({username: '', email: '', password: ''});

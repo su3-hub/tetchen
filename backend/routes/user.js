@@ -4,13 +4,17 @@ import jwt from "jsonwebtoken";
 import User from "../model/user.js"
 import catchAsync from "../utils/catchAsync.js";
 import ExpressError from "../utils/ExpressError.js";
+import { userRegistrationSchema, loginSchema } from "../../shared/schemas/userSchema.js"
 
 const router = express.Router();
 const saltRounds = 10;
 
 router.route("/register")
     .post(catchAsync (async (req, res, next) => {
-        // throw new ExpressError("muri", 501)
+        const result = userRegistrationSchema.safeParse(req.body);
+        if (!result.success) {
+            throw new ExpressError("入力内容についてエラーが発生しました。入力内容を確認してください。", 400);
+        }
         const { username, email, password } = req.body;
         try {
             const hashPassword = await bcrypt.hash(password, saltRounds);
@@ -21,7 +25,6 @@ router.route("/register")
                 { expiresIn: "1d"}
             );
             await newUser.save();
-            console.log("successed to REGISter", newUser)
             return res.status(200).json({ message: "アカウント作成成功！", newUser, token });
         } catch (error) {
             console.error(error);
@@ -31,6 +34,10 @@ router.route("/register")
 
 router.route("/login")
     .post(catchAsync (async (req, res) => {
+        const result = loginSchema.safeParse(req.body);
+        if (!result.success) {
+            throw new ExpressError("入力内容についてエラーが発生しました。入力内容を確認してください。", 400);
+        };
         const { email, password } = req.body;
         const user = await User.findOne({email})
         if (!user) return res.status(401).send("認証情報が正しくありません");

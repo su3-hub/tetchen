@@ -10,7 +10,7 @@ import { initialRecipe } from "./utils/data";
 import Loading from "./components/Loading";
 import ErrorOverlay from "./components/ErrorOverlay";
 import * as z from "zod";
-import { recipeSchema } from '../../shared/schemas/recipeSchema.js';
+import { recipeSchema } from '../shared/schemas/recipeSchema.js';
 
 export default function UpdateRecipe({}) {
     const { recipeId } = useParams();

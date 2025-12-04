@@ -5,7 +5,7 @@ import { userAtom } from "./context/jotai.js";
 import axios from "axios";
 import * as z from "zod";
 import ErrorOverlay from "./components/ErrorOverlay";
-import { loginSchema } from "../../shared/schemas/userSchema.js";
+import { loginSchema } from "../shared/schemas/userSchema.js";
 
 export default function Login() {
     const [loginElements, setLoginElements] = useState({ email: '', password: ''});

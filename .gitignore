@@ -1,18 +1,24 @@
-# ------------------------------------------------------------------
-# 共通で無視するファイル/フォルダ
-# ------------------------------------------------------------------
-
-# IDE/エディタの設定ファイル (例: VS Code)
-.vscode/
-
-# ログファイルやビルドキャッシュ
+# Logs
+logs
 *.log
-.DS_Store
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# ------------------------------------------------------------------
-# サブディレクトリ共通のビルド結果/依存関係フォルダ
-# ------------------------------------------------------------------
-node_modules/
-dist/
-build/
-.env
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
