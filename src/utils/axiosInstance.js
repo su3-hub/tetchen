@@ -4,7 +4,7 @@ const isDevelopment = import.meta.env.DEV;
 
 const api = axios.create({
     baseURL: isDevelopment
-        ? "/api"
+        ? "http://localhost:3000"
         : import.meta.env.VITE_API_URL
     ,
     timeout: 10000

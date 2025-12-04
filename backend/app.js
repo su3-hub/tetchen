@@ -27,6 +27,10 @@ const allowedOrigins = [
     "http://localhost:5173",
 ];
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(myMongoSanitize);
+
 const corsOptions = {
     origin: (origin, callback) => {
         if (!origin || allowedOrigins.includes(origin)) {
@@ -40,9 +44,6 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(myMongoSanitize);
 
 const scriptSrcUrls = [
     "https://kit.fontawesome.com/",
