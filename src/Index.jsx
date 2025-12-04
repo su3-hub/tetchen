@@ -72,7 +72,7 @@ export default function Index() {
 
     return (
     <div className="w-full">
-        {user && <p className='text-center'>こんにちは<span className='font-bold'>{user.username}</span>さん</p>}
+        {user && <p className='text-center'>こんにちは<span className='font-bold'>{user?.username}</span>さん</p>}
         <AnimatePresence>
             {message && <Message message={message} setMessage={setMessage}/>}
         </AnimatePresence>
