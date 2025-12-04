@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
-import axios from "axios";
 import { motion } from "motion/react";
 import Ingredients from "./components/Ingredients";
 import SelectNumberInput from "./components/SelectNumberInput";
@@ -11,6 +10,7 @@ import Loading from "./components/Loading";
 import ErrorOverlay from "./components/ErrorOverlay";
 import * as z from "zod";
 import { recipeSchema } from '../shared/schemas/recipeSchema.js';
+import api from "./utils/axiosInstance.js";
 
 export default function UpdateRecipe({}) {
     const { recipeId } = useParams();
@@ -25,7 +25,7 @@ export default function UpdateRecipe({}) {
     useEffect(() => {
     async function getSingleData (recipeId) {
         try {
-            const { data } = await axios.get(`http://localhost:3000/api/recipes/${recipeId}/update`, reqHeader);
+            const { data } = await api.get(`/recipes/${recipeId}/update`, reqHeader);
             const initializedProcesses = data.processes.map(process => ({
                 ...process, file: null, imageUrl: process.url || null, imageFilename: process.imageFilename || null, tempKey: createUniqueId(),
             }));
@@ -101,8 +101,8 @@ export default function UpdateRecipe({}) {
         formData.append('isDraft', isDraft);
         setIsLoading(true);
         try {
-            const res = await axios.put(
-                `http://localhost:3000/api/recipes/${recipeId}/update`, formData, reqHeader,);
+            const res = await api.put(
+                `/recipes/${recipeId}/update`, formData, reqHeader,);
             setIsLoading(false);
             setRecipe(initialRecipe)
             navigate(`/recipes/${res.data._id}`);

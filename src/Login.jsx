@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router";
 import { useAtom } from "jotai";
 import { userAtom } from "./context/jotai.js";
-import axios from "axios";
 import * as z from "zod";
 import ErrorOverlay from "./components/ErrorOverlay";
 import { loginSchema } from "../shared/schemas/userSchema.js";
@@ -43,7 +42,7 @@ export default function Login() {
             return;
         };
         try {
-            const { data } = await axios.post("http://localhost:3000/api/user/login", loginElements);
+            const { data } = await api.post("/user/login", loginElements);
             localStorage.setItem("token", data.token)
             setUser(data.user);
             navigate("/recipes");

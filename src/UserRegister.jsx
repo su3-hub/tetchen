@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import axios from "axios";
 import { useAtom } from "jotai";
 import { userAtom } from "./context/jotai";
 import ErrorOverlay from "./components/ErrorOverlay";
 import * as z from "zod";
 import { userRegistrationSchema } from "../shared/schemas/userSchema";
+import api from "./utils/axiosInstance";
 
 export default function UserRegister() {
     const [registerElements, setRegisterElements] = useState({username: '', email: '', password: ''});
@@ -42,7 +42,7 @@ export default function UserRegister() {
                 return;
             };
         try {
-            const { data } = await axios.post("http://localhost:3000/api/user/register", registerElements);
+            const { data } = await api.post("/user/register", registerElements);
             localStorage.setItem("token", data.token)
             setUser(data.newUser);
             setError(null);

@@ -3,11 +3,11 @@ import { useParams, useNavigate } from "react-router";
 import { Link } from "react-router";
 import { useAtom } from "jotai";
 import { userAtom } from "./context/jotai.js";
-import axios from "axios";
 import IndexNum from "./components/IndexNum.jsx";
 import Confirmation from "./components/Confirmation"; 
 import Loading from './components/Loading';
 import ErrorOverlay from './components/ErrorOverlay.jsx';
+import api from './utils/axiosInstance.js';
 
 export default function Show() {
     const navigate = useNavigate();
@@ -22,7 +22,7 @@ export default function Show() {
     useEffect(() => {
         async function getSingleData (recipeId) {
             try {
-               const response = await axios.get(`http://localhost:3000/api/recipes/${recipeId}`);
+               const response = await api.get(`/recipes/${recipeId}`);
                setRecipe(response.data);
             } catch (error) {
                 console.error(error);
@@ -38,7 +38,7 @@ export default function Show() {
     const handleDelete = async () => {
         setIsLoading(true);
         try {
-            const { data } = await axios.delete(`http://localhost:3000/api/recipes/${recipeId}`, reqHeader);
+            const { data } = await api.delete(`/recipes/${recipeId}`, reqHeader);
             console.log(data);
             navigate('/recipes', {state: {message: `「${data.title}」を削除しました。`}})
         } catch (error) {

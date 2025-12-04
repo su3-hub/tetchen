@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router";
-import axios from "axios";
 import { motion } from "motion/react";
 import useScrollRestoration from "./custom_hooks/useScrollRestoration";
 import { applyFiltersAndSort } from "./utils/actions";
+import api from "./utils/axiosInstance";
 
 export default function MyItemsPage () {    
     const { userId } = useParams();
@@ -17,7 +17,7 @@ export default function MyItemsPage () {
     useEffect(() => {
         async function getSingleData (userId) {
             try {
-                const { data } = await axios.get(`http://localhost:3000/api/recipes/myitems/${userId}`, reqHeader);
+                const { data } = await api.get(`/recipes/myitems/${userId}`, reqHeader);
                 setRawData(data);
             } catch (error) {
                 console.error(error);

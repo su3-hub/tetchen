@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router';
 import { AnimatePresence, motion } from 'motion/react';
@@ -9,6 +8,7 @@ import useScrollRestoration from './custom_hooks/useScrollRestoration.jsx';
 import { applyFiltersAndSort } from "./utils/actions";
 import ErrorOverlay from "./components/ErrorOverlay.jsx"
 import CreateButton from './components/CreateButton';
+import api from './utils/axiosInstance.js';
     
 export default function Index() {
     const [rawData, setRawData] = useState([]);
@@ -25,7 +25,7 @@ export default function Index() {
         async function getData() {
             setIsLoading(true);
             try {
-                const { data } = await axios.get('http://localhost:3000/api/recipes');
+                const { data } = await api.get('/recipes');
                 setRawData(data);
                 setError(null);
             } catch (error) {

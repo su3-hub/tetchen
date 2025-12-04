@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import axios from 'axios';
 import Ingredients from './components/Ingredients'
 import ProcessForm from './components/ProcessForm'
 import SelectNumberInput from "./components/SelectNumberInput";
@@ -11,6 +10,7 @@ import { useAtom } from "jotai";
 import { userAtom } from "./context/jotai.js";
 import * as z from "zod";
 import { recipeSchema } from '../shared/schemas/recipeSchema.js';
+import api from './utils/axiosInstance.js';
 
 export default function CreateRecipe() {
     const [recipe, setRecipe] = useState(initialRecipe);
@@ -82,7 +82,7 @@ export default function CreateRecipe() {
         // }
         setIsLoading(true);
         try {
-            const res = await axios.post('http://localhost:3000/api/recipes', formData, reqHeader);
+            const res = await api.post('/recipes', formData, reqHeader);
             setIsLoading(false);
             setRecipe(initialRecipe)
             navigate(`/recipes/${res.data._id}`);
