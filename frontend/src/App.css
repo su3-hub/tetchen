@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+body {
+    color: #444;
+}
+
+@layer components {
+  .btn-primary {
+    border-radius: calc(infinity * 1px);
+    background-color: var(--color-yellow-800);
+    padding-inline: --spacing(5);
+    padding-block: --spacing(2);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-white);
+    box-shadow: var(--shadow-md);
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-violet-700);
+      }
+    }
+  }
+}
+
+.invisible-overlay {
+  opacity: 0;
+  transition: all .3s;
+  visibility: hidden;
+}
+
+.visible-overlay {
+  opacity: 1;
+  transition: all .3s;
+  visibility: visible;
+}
+
+.btn {
+    padding: 8px 10px;
+    border-radius: 25px;
+}
+
+.btn-gray {
+    color: #fff;
+    background-color: #99a1af;
+}
+
+.btn-natural {
+    color: #fff;
+    background-color: #179717;
+}
+.btn-danger {
+    color: #fff;
+    background-color: #636363;
+}
+
+/* .square {
+  width: 60vw;
+  height: 60vw;
+  max-width: 400px;
+  max-height: 400px;
+  
+} */
+
+.hollow-out {
+  color: transparent;
+  -webkit-text-stroke: 1px #888;
+}
+
+.spinner {
+  animation: load-flickering infinite 1s linear;
+}
+
+@keyframes load-flickering {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(1turn)
+  }
+}
+
+.drawer {
+  transition: .5s all;
+}
+
+.tag {
+  transition: .5s all;
+}
+
+.gradual {
+  transition: .3s all;
+}

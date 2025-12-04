@@ -1,0 +1,51 @@
+### Index
+GET http://localhost:3000/recipes/wef
+### Index
+GET http://localhost:3000/recipes
+
+### New recipe
+POST http://localhost:3000/recipes
+Content-Type: application/json
+
+{
+    "title": "焼き鳥2",
+    "topImage": "https://images.unsplash.com/photo-1616169776580-c86189ee67b8?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1374",
+    "ingredients": {
+        "name": "鶏もも肉",
+        "qty": 300,
+        "unit": "g"
+    },
+    "processes": [
+        {
+        "image": "",
+        "description": "Burn chicken meat."
+        },
+        {
+        "image": "",
+        "description": "eat as thank god."
+        }
+    
+    ]
+}
+
+### Show details of recipe
+GET http://localhost:3000/recipes/69070d8e697da2bfe92564b7
+
+### Edit a recipe
+PUT http://localhost:3000/recipes/69070d8e697da2bfe92564b7
+Content-Type: application/json
+
+{
+    "title": "焼き鳥",
+    "topImage": "https://images.unsplash.com/photo-1616169776580-c86189ee67b8?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1374",
+    "processes": [
+        {
+        "image": "",
+        "description": "Burn chicken meat."
+        },
+        {
+        "image": "",
+        "description": "Eat as thank god. Yam yam."
+        }
+    ]
+}
