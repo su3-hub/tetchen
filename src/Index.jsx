@@ -100,7 +100,7 @@ export default function Index() {
                         <div className="">
                             <p className='p-2'>{ d.caption && (
                                 d.caption.length < 40 ? d.caption : d.caption.slice(0, 40)+'......')}</p>
-                            <p className='px-2 border-y-2 border-gray-200 text-sm'>書いた人: <b className="">{d.author.username}</b></p>
+                            <p className='px-2 border-y-2 border-gray-200 text-sm'>書いた人: <b className="">{d.author?.username}</b></p>
                             <p className='px-2 py-1 text-sm'>最終更新日: {new Date(d.updatedAt).toLocaleDateString()}</p>
                         </div>
                     </li>
