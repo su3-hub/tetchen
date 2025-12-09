@@ -4,6 +4,7 @@ import { Link } from "react-router";
 import { useAtom } from "jotai";
 import { userAtom } from "./context/jotai.js";
 import IndexNum from "./components/IndexNum.jsx";
+import SelectNumberInput from './components/SelectNumberInput.jsx';
 import Confirmation from "./components/Confirmation"; 
 import Loading from './components/Loading';
 import ErrorOverlay from './components/ErrorOverlay.jsx';
@@ -14,6 +15,7 @@ export default function Show() {
     const { recipeId } = useParams();
     const [recipe, setRecipe] = useState({});
     const [isLoading, setIsLoading] = useState(false);
+    const [howMany, setHowMany] = useState(null);
     const [showConfirm, setShowConfirm] = useState(false);
     const [error, setError] = useState(null);
     const [user, ] = useAtom(userAtom);
@@ -24,6 +26,7 @@ export default function Show() {
             try {
                const response = await api.get(`/recipes/${recipeId}`);
                setRecipe(response.data);
+               setHowMany(response.data.howManyServe);
             } catch (error) {
                 console.error(error);
             }
@@ -52,49 +55,74 @@ export default function Show() {
     const onClose = () => {
         setShowConfirm(false);
     }
+    const handleQty = e => {
+        setHowMany(e.target.value);
+    };
 
     return (
-        <div className="w-70 mx-auto">
-            <h1 className="my-3 pb-2 text-center text-2xl font-bold border-b-2 border-dotted">{recipe.title}</h1>
-            {recipe.topImage?.url ? 
-                <img src={recipe.topImage.url} alt={recipe.title} className="rounded-xl"/>
-                :
-                <div className="text-center h-50 bg-gray-100 flex items-center rounded-xl">
-                    <p className='mx-auto'>No Image</p>
+        <div className="w-70 mx-auto md:w-full md:max-w-250 md:px-5">
+            <div className="md:flex gap-8">
+                <div className="md:w-2/3">
+                    <h1 className="my-3 pb-2 text-center text-2xl font-bold border-b-2 border-dotted">{recipe.title}</h1>
+                    {recipe.topImage?.url ? 
+                        <img src={recipe.topImage.url} alt={recipe.title} className="rounded-xl"/>
+                        :
+                        <div className="text-center h-50 bg-gray-100 flex items-center rounded-xl">
+                            <p className='mx-auto'>No Image</p>
+                        </div>
+                    }
+                
+                    <p className="my-3 pb-2 border-b-2 border-dotted">{recipe.caption}</p>
+                    <div className="mx-auto max-w-65">
+                        <h2 className="mx-auto my-3 text-center text-2xl font-bold border-b-2 border-dotted">
+                            材料
+                            {recipe?.howManyServe && <span className='text-lg ml-3'><SelectNumberInput min={1} max={5} initial={howMany} handleChange={handleQty}/></span>}
+                            </h2>
+                        {recipe.ingredients?.map((ingredient, i) => (                    
+                            <li key={i} className="list-none flex justify-between">
+                                <span className="w-1/2">{ingredient.name}</span>
+                                {ingredient.unit.match(/さじ|匙/) ?
+                                <span className='text-right'>{ingredient.unit}{ingredient.qty}</span>
+                                :
+                                <span className='text-right'>{Math.round(ingredient.qty*howMany/recipe.howManyServe*10)/10}{ingredient.unit}</span>
+                            }
+                                
+                            </li>
+                        ))}
+                    </div>
+                </div>
+            
+                <div className='md:w-full'>
+                    <h2 className="w-50 mx-auto my-3 text-center text-2xl font-bold border-b-2 border-dotted">作り方</h2>
+                    <ul className="">
+                    {recipe.processes?.map((process, i) => (
+                        <div key={i} className="my-5 w-50 mx-auto border-b border-dotted md:w-full">
+                            <IndexNum i={i}/>
+                            <div className="md:flex md:my-3 gap-3 md:items-center">
+                                <li className="pb-2">{process.description}</li>
+                                {process.hasImage &&
+                                    <img
+                                    src={process?.imageUrl}
+                                    alt={process.description}
+                                    className='md:w-30'
+                                    />
+                                }
+                                
+                            </div>
+                        </div>
+                    ))}
+                    </ul>
+                </div>
+            </div>
+            
+            {recipe.supplement &&
+                <div className="max-w-150 mx-auto rounded-xl bg-sky-100 p-4 my-5">
+                    <p className="text-3xl text-teal-600"><i className="ri-lightbulb-fill"></i>ひと言ふた言</p>
+                    {recipe.supplement}
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta consectetur, omnis, numquam necessitatibus exercitationem libero vero ipsam quis aliquid voluptatum praesentium quas aliquam sint! Quis aliquam obcaecati dignissimos itaque eveniet.
                 </div>
             }
-        
-            <p className="my-3 pb-2 text-center border-b-2 border-dotted">{recipe.caption}</p>
-            <div className="w-50 mx-auto">
-                <h2 className="mx-auto my-3 text-center text-2xl font-bold border-b-2 border-dotted">
-                    材料
-                    {recipe?.howManyServe && <span className='text-lg'>({recipe.howManyServe}人前)</span>}
-                    </h2>
-                {recipe.ingredients?.map((ingredient, i) => (
-                    <li key={i} className="list-none">{ingredient.name} {ingredient.qty}{ingredient.unit}</li>
-                ))}
-            </div>
-            <div>
-                <h2 className="w-50 mx-auto my-3 text-center text-2xl font-bold border-b-2 border-dotted">作り方</h2>
-                <ul>
-                {recipe.processes?.map((process, i) => (
-                    <div key={i} className="my-4 w-50 mx-auto">
-                        <IndexNum i={i}/>
-                        {process.hasImage ? 
-                            <img
-                            src={process?.imageUrl}
-                            alt={process.description} 
-                            />
-                            :
-                            <div className="text-center h-50 bg-gray-100 flex items-center rounded-xl">
-                                <p className='mx-auto'>No Image</p>
-                            </div>
-                        }
-                        <li>{process.description}</li>
-                    </div>
-                ))}
-                </ul>
-            </div>
+            
             
         
             {(user && recipe.author?._id.toString() === user?._id.toString()) && 

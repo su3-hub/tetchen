@@ -1,4 +1,4 @@
-export default function SelectNumberInput ({min, max, initial, handleChangeRecipe}) {
+export default function SelectNumberInput ({min, max, initial, handleChange}) {
     const numOption = (()=> {
         const array = [];
         for (let i = min; i <= max; i++) {
@@ -17,7 +17,7 @@ export default function SelectNumberInput ({min, max, initial, handleChangeRecip
             name="howManyServe"
             id="howManyServe"
             className="border-2 border-sky-200 rounded-md bg-gray-50"
-            onChange={handleChangeRecipe}
+            onChange={handleChange}
         >
             <option value="">--</option>
             {numOption.map(opt => (
