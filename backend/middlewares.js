@@ -5,6 +5,7 @@ import ExpressError from "./utils/ExpressError.js";
 
 export const verifyToken = (req, res, next)=> {
     const token = req.headers.authorization;
+    console.log("TOKEN", token)
     if (token && token.startsWith("Bearer")) {
         const tokenBody = token.split(" ")[1];
         try {

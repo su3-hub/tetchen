@@ -21,7 +21,7 @@ export default function UpdateRecipe({}) {
     const [isDirty, setIsDirty] =useState(false);
     const navigate = useNavigate();
     const reqHeader = {headers: {"Authorization": `Bearer ${localStorage.getItem("token")}`}};
-
+    
     useEffect(() => {
     async function getSingleData (recipeId) {
         try {
