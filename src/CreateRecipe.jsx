@@ -76,6 +76,7 @@ export default function CreateRecipe() {
         formData.append('howManyServe', recipe.howManyServe);
         formData.append('ingredients', JSON.stringify(recipe.ingredients));
         formData.append('processes', JSON.stringify(processDescriptions));
+        formData.append("supplement", recipe.supplement);
         formData.append('isDraft', isDraft);
         // for (let [key, value] of formData.entries()) {
         //     console.log(`${key} : ${value}`)
@@ -83,12 +84,12 @@ export default function CreateRecipe() {
         setIsLoading(true);
         try {
             const res = await api.post('/recipes', formData, reqHeader);
-            setIsLoading(false);
             setRecipe(initialRecipe)
             navigate(`/recipes/${res.data._id}`);
         } catch (error) {
             console.error(error);
             setError(error.response.data);
+        } finally {
             setIsLoading(false);
         };
     };
@@ -169,6 +170,16 @@ export default function CreateRecipe() {
                 setRecipe={setRecipe}
                 validation={validation?.processes}
             />
+        </div>
+
+        {/* supplement */}
+        <div className="flex flex-col rounded-xl shadow-lg p-3 mb-8">
+            <label htmlFor="supplement" className='text-center text-2xl font-bold mb-2'>補足・調理のポイント</label>
+            <textarea name="supplement" id="supplement" rows="5"
+                placeholder='※補足欄は任意です。'
+                onChange={handleChangeRecipe}
+                className='block mx-auto w-full mb-3 p-2 rounded-xl bg-gray-50 outline-1 outline-amber-300 focus:outline-2 focus:outline-amber-500'
+            ></textarea>
         </div>
 
         <div className="border-t-2 border-dotted"></div>

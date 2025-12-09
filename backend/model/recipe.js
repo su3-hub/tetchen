@@ -43,6 +43,7 @@ const recipeSchema = new Schema({
         hasImage: Boolean,
         _id: false
     }],
+    supplement: String,
     isDraft: {
         type: Boolean,
         required: true,

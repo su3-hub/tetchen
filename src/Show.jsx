@@ -115,9 +115,9 @@ export default function Show() {
                 </div>
             </div>
             
-            {recipe.supplement &&
+            {recipe.supplement & recipe.supplement.lenght > 0 &&
                 <div className="max-w-150 mx-auto rounded-xl bg-sky-100 p-4 my-5">
-                    <p className="text-3xl text-teal-600"><i className="ri-lightbulb-fill"></i>ひと言ふた言</p>
+                    <p className="text-3xl text-teal-600 text-center"><i className="ri-lightbulb-fill"></i>補足</p>
                     {recipe.supplement}
                     Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta consectetur, omnis, numquam necessitatibus exercitationem libero vero ipsam quis aliquid voluptatum praesentium quas aliquam sint! Quis aliquam obcaecati dignissimos itaque eveniet.
                 </div>

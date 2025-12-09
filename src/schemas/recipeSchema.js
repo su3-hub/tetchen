@@ -29,6 +29,7 @@ export const recipeSchema = z.object({
         imageFilename: z.union([z.null(), z.string()]).optional(),
         file: z.union([z.null(), z.file()]).optional(),
     })),
+    supplement: z.string().max(200, "補足欄は200文字までです。").optional(),
     isDraft: z.boolean().optional(),
     tags: z.array(z.string().max(10, "タグは10文字までです。")).optional(),
 });
