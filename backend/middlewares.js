@@ -5,15 +5,16 @@ import ExpressError from "./utils/ExpressError.js";
 
 export const verifyToken = (req, res, next)=> {
     const token = req.headers.authorization;
-    console.log("TOKEN", token)
     if (token && token.startsWith("Bearer")) {
         const tokenBody = token.split(" ")[1];
         try {
             const decodedPayload = jwt.verify(tokenBody, process.env.JWT_SECRET);
+            console.log(decodedPayload.id)
             if (req.body) {
                 req.body.author = decodedPayload.id;
             };
             req.author = decodedPayload.id;
+            console.log('AUTHOR', req.author)
             next();
         } catch (error) {
             throw new ExpressError("無効なトークンです。", 403);
@@ -35,7 +36,8 @@ export const isRecipeAuthor = async (req, res, next) => {
 
 export const isAuthor = async (req, res, next) => {
     const user = await User.findById(req.params.userId);
-    if (user._id.equals(req.userId)) {
+    console.log(user)
+    if (user._id.equals(req.author)) {
         next();
     } else {
         throw new ExpressError("このリソースを操作する権限がありません。", 403);
