@@ -51,14 +51,15 @@ export default function UpdateRecipe({}) {
     }, [recipe]);
 
     const handleChangeRecipe = e => {
-        if (e.target.files) {
-            const file = e.target.files[0];
+        const { name, value, files } = e.target;
+        if (files) {
+            const file = files[0];
             const imageUrl = URL.createObjectURL(file);
             setRecipe({...recipe, topImage: {file: file, url: imageUrl}})
         } else if (name === "howManyServe") {
             setRecipe({...recipe, howManyServe: Number(value) > 0 ? Number(value): null});
         } else {
-            setRecipe({...recipe, [e.target.name]: e.target.value})
+            setRecipe({...recipe, [name]: value})
         }
     };
 

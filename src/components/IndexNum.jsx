@@ -4,4 +4,4 @@ export default function IndexNum({i, mt}) {
             <h2 className='font-bold text-xl mb-1 mx-auto'>{i+1}</h2>
         </div>
     )
-}
+};

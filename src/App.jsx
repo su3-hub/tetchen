@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, ScrollRestoration } from 'react-router';
 import Navbar from './components/Navbar';
 import './App.css';
 import { UserInfoProvider } from './context/UserInfoProvider';
-import HomePage from "./Home"
+import HomePage from "./HomePage"
 import Show from './Show';
 import Index from './Index';
 import UpdateRecipe from './UpdateRecipe';

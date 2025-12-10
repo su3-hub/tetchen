@@ -82,7 +82,7 @@ export default function Show() {
                             <li key={i} className="list-none flex justify-between">
                                 <span className="w-1/2">{ingredient.name}</span>
                                 {ingredient.unit.match(/さじ|匙/) ?
-                                <span className='text-right'>{ingredient.unit}{ingredient.qty}</span>
+                                <span className='text-right'>{ingredient.unit}{Math.round(ingredient.qty*howMany/recipe.howManyServe*10)/10}</span>
                                 :
                                 <span className='text-right'>{Math.round(ingredient.qty*howMany/recipe.howManyServe*10)/10}{ingredient.unit}</span>
                             }
@@ -114,12 +114,11 @@ export default function Show() {
                     </ul>
                 </div>
             </div>
-            
-            {recipe.supplement & recipe.supplement.lenght > 0 &&
+            {/* & recipe.supplement.length > 0 */}
+            {recipe?.supplement && recipe.supplement?.length > 0 &&
                 <div className="max-w-150 mx-auto rounded-xl bg-sky-100 p-4 my-5">
-                    <p className="text-3xl text-teal-600 text-center"><i className="ri-lightbulb-fill"></i>補足</p>
+                    <p className="text-2xl mb-2 text-teal-600 text-center"><i className="ri-lightbulb-fill"></i>Tips</p>
                     {recipe.supplement}
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta consectetur, omnis, numquam necessitatibus exercitationem libero vero ipsam quis aliquid voluptatum praesentium quas aliquam sint! Quis aliquam obcaecati dignissimos itaque eveniet.
                 </div>
             }
             

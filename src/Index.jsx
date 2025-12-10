@@ -26,7 +26,6 @@ export default function Index() {
             setIsLoading(true);
             try {
                 const { data } = await api.get('/recipes');
-                console.log('RES.DATA: ',data);
                 setRawData(data);
                 setError(null);
             } catch (error) {
@@ -89,7 +88,7 @@ export default function Index() {
         >
             {displayedData.map((d, i) => (
                 <Link key={i} to={`/recipes/${d._id}`} onClick={saveScroll} className='hover:opacity-80 gradual'>
-                    <li className=' mx-auto mb-6 bg-gray-50 outline-3 outline-gray-200 rounded-2xl overflow-hidden shadow-md sm:w-60'>
+                    <li className='mx-auto mb-6 bg-gray-50 outline-3 outline-gray-200 rounded-2xl overflow-hidden shadow-md sm:w-60'>
                         <h1 className='text-center my-2 text-xl font-bold'>{d.title}</h1>
                         {d.topImage?.url ? 
                             <img src={d.topImage.url} className='w-full h-50 object-cover '/>

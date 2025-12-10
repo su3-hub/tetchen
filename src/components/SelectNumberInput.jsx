@@ -3,9 +3,9 @@ export default function SelectNumberInput ({min, max, initial, handleChange}) {
         const array = [];
         for (let i = min; i <= max; i++) {
             if (i===initial) {
-                array.push(<option value={i} selected>{i}</option>)
+                array.push(<option key={i} value={i} selected>{i}</option>)
             } else {
-                array.push(<option value={i}>{i}</option>)
+                array.push(<option key={i} value={i}>{i}</option>)
             }
         };
         return array;
