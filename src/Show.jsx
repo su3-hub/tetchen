@@ -21,6 +21,7 @@ export default function Show() {
     const [user, ] = useAtom(userAtom);
     const reqHeader = {headers: {"Authorization": `Bearer ${localStorage.getItem("token")}`}};
 
+    // Get single data
     useEffect(() => {
         async function getSingleData (recipeId) {
             try {
@@ -34,10 +35,12 @@ export default function Show() {
         getSingleData(recipeId);
     }, [recipeId])
     
+    // Display overlay for confirm deletion or not
     const showConfirmation = () => {
         setShowConfirm(true);
     };
 
+    // Process for delete recipe
     const handleDelete = async () => {
         setIsLoading(true);
         try {
@@ -55,6 +58,7 @@ export default function Show() {
     const onClose = () => {
         setShowConfirm(false);
     }
+    // Set a variable to change the amount
     const handleQty = e => {
         setHowMany(e.target.value);
     };
@@ -62,6 +66,7 @@ export default function Show() {
     return (
         <div className="w-70 mx-auto md:w-full md:max-w-250 md:px-5">
             <div className="md:flex gap-8">
+                {/* container for title & caption & topimage & ingredients */}
                 <div className="md:w-2/3">
                     <h1 className="my-3 pb-2 text-center text-2xl font-bold border-b-2 border-dotted">{recipe.title}</h1>
                     {recipe.topImage?.url ? 
@@ -91,7 +96,8 @@ export default function Show() {
                         ))}
                     </div>
                 </div>
-            
+                
+                {/* Container for processes */}
                 <div className='md:w-full'>
                     <h2 className="w-50 mx-auto my-3 text-center text-2xl font-bold border-b-2 border-dotted">作り方</h2>
                     <ul className="">
@@ -114,7 +120,8 @@ export default function Show() {
                     </ul>
                 </div>
             </div>
-            {/* & recipe.supplement.length > 0 */}
+            
+            {/* Display caption if present */}
             {recipe?.supplement && recipe.supplement?.length > 0 &&
                 <div className="max-w-150 mx-auto rounded-xl bg-sky-100 p-4 my-5">
                     <p className="text-2xl mb-2 text-teal-600 text-center"><i className="ri-lightbulb-fill"></i>Tips</p>
@@ -122,8 +129,7 @@ export default function Show() {
                 </div>
             }
             
-            
-        
+            {/* Display 'edit' & 'delete' button if current user is author */}
             {(user && recipe.author?._id.toString() === user?._id.toString()) && 
             <>
                 <Link
@@ -141,6 +147,7 @@ export default function Show() {
             </>
             }
             
+            {/* Overlay for delete confirmation */}
             {showConfirm && 
             <Confirmation
                 message={`「${recipe.title}」を削除しますか？`}
@@ -148,7 +155,11 @@ export default function Show() {
                 action={handleDelete}
             />
             }
+
+            {/* Display this only during load data */}
             {isLoading && <Loading />}
+
+            {/* Display this when occured errors */}
             {error && 
                 <ErrorOverlay 
                     errors={error.message}

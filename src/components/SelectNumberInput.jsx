@@ -1,4 +1,5 @@
 export default function SelectNumberInput ({min, max, initial, handleChange}) {
+    // Generate <option>s depending on arguments min and max
     const numOption = (()=> {
         const array = [];
         for (let i = min; i <= max; i++) {

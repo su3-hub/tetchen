@@ -22,6 +22,12 @@ export default function UpdateRecipe({}) {
     const navigate = useNavigate();
     const reqHeader = {headers: {"Authorization": `Bearer ${localStorage.getItem("token")}`}};
 
+    // Redirect to login page when user isn't logging in
+    useEffect(() => {
+        if (!user) navigate('/user/login', {state: {message: 'ログインが必要です。'}});
+    });
+
+    // Get data user want to edit
     useEffect(() => {
     async function getSingleData (recipeId) {
         try {
@@ -39,6 +45,7 @@ export default function UpdateRecipe({}) {
     getSingleData(recipeId);
     }, []);
 
+    // Execute if validation errors occurred when the user tried to registration recipe first time, and keep monitor input after this.
     useEffect(() => {
         if (!isDirty) return;
 
@@ -50,6 +57,7 @@ export default function UpdateRecipe({}) {
             };
     }, [recipe]);
 
+    // Store user inputs depending on input type
     const handleChangeRecipe = e => {
         const { name, value, files } = e.target;
         if (files) {
@@ -63,13 +71,17 @@ export default function UpdateRecipe({}) {
         }
     };
 
+    // Registration process.
     const handleUpdate = async (isDraft) => {
+        // Validation with "zod"
         const result = recipeSchema.safeParse(recipe);
         if (!result.success) {
             setValidation(z.flattenError(result.error).fieldErrors);
             setIsDirty(true);
             return;
         };
+
+        // Store the recieved data in a FormData instance
         const fileToUpload = recipe.topImage?.file;
         const processDescriptions = [];
         const formData = new FormData();
@@ -101,6 +113,8 @@ export default function UpdateRecipe({}) {
         // for (let [key, value] of formData.entries()) {
         //     console.log(`${key} : ${value}`);
         // }
+
+        // Put request to backend
         setIsLoading(true);
         try {
             const res = await api.put(

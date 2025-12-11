@@ -11,8 +11,8 @@ import CreateButton from './components/CreateButton';
 import api from './utils/axiosInstance.js';
     
 export default function Index() {
-    const [rawData, setRawData] = useState([]);
-    const [displayedData, setDisplayedData] = useState([]);
+    const [rawData, setRawData] = useState([]); //for temporary storage
+    const [displayedData, setDisplayedData] = useState([]); //for display storage
     const [filterCondition, setFilterCondition] = useState({ascending: false});
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -21,6 +21,7 @@ export default function Index() {
     const [message, setMessage] = useState(state?.message);
     const {restoreScroll, saveScroll} = useScrollRestoration();
 
+    // Get all recipes from backend
     useEffect( () => {
         async function getData() {
             setIsLoading(true);
@@ -38,6 +39,7 @@ export default function Index() {
         getData();
     }, [user]);
 
+    // store scroll position
     useEffect(()=> {
         if (!isLoading && rawData.length > 0) {
             const timer = setTimeout(() => {
@@ -47,6 +49,7 @@ export default function Index() {
         }
     }, [isLoading, rawData.length]);
 
+    // Sort and filter rawData, and then store in displayData.
     useEffect(() => {
         setDisplayedData(applyFiltersAndSort(rawData, filterCondition));    
     }, [filterCondition, rawData]);
@@ -57,7 +60,7 @@ export default function Index() {
     };
 
     if (isLoading) {
-        return <div>Loading Now...</div>
+        return <div className='mx-auto my-auto'>Loading Now...</div>
     };
 
     if (error) {
@@ -74,6 +77,7 @@ export default function Index() {
     <div className="w-full">
         {user && <p className='text-center'>こんにちは<span className='font-bold'>{user?.username}</span>さん</p>}
         <AnimatePresence>
+            {/* display the messages if here are messages from prevous page passes.*/}
             {message && <Message message={message} setMessage={setMessage}/>}
         </AnimatePresence>
         <h1 className='text-center my-4'>さあ、ご飯の時間だ</h1>
@@ -84,8 +88,9 @@ export default function Index() {
         }
         <motion.div 
             className="w-60 sm:w-full mx-auto sm:flex sm:flex-wrap sm:justify-center sm:gap-5"
-            layout initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: .5}}
+            layout initial={{opacity: 0, y: -100}} animate={{opacity: 1, y:0}} transition={{duration: .5}}
         >
+            {/* display recipe cards with map function */}
             {displayedData.map((d, i) => (
                 <Link key={i} to={`/recipes/${d._id}`} onClick={saveScroll} className='hover:opacity-80 gradual'>
                     <li className='mx-auto mb-6 bg-gray-50 outline-3 outline-gray-200 rounded-2xl overflow-hidden shadow-md sm:w-60'>

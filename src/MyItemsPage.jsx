@@ -14,8 +14,9 @@ export default function MyItemsPage () {
     const { restoreScroll, saveScroll } = useScrollRestoration();
     const reqHeader = {headers: {"Authorization": `Bearer ${localStorage.getItem("token")}`}};
 
+    // Get user's own items
     useEffect(() => {
-        async function getSingleData (userId) {
+        async function getUserRecipes (userId) {
             try {
                 const { data } = await api.get(`/recipes/myitems/${userId}`, reqHeader);
                 setRawData(data);
@@ -25,9 +26,10 @@ export default function MyItemsPage () {
                 setIsLoading(false);
             }
         };
-        getSingleData(userId);
+        getUserRecipes(userId);
     }, [userId]);
 
+    // Restore scroll position
     useEffect(()=> {
         if (!isLoading && rawData.length > 0) {
             const timer = setTimeout(() => {
@@ -37,6 +39,7 @@ export default function MyItemsPage () {
         }
     }, [isLoading, rawData.length]);
     
+    // Sort and filter rawData, and then store in displayData.
     useEffect(() => {
         setDisplayedData(applyFiltersAndSort(rawData, filterCondition));    
     }, [filterCondition, rawData]);
@@ -54,6 +57,7 @@ export default function MyItemsPage () {
         <div className="w-90 mx-auto sm:w-full">
             <h1 className='text-center text-3xl my-4'>マイアイテム</h1>
             <div className="flex justify-center gap-5 mb-3">
+                {/* Buttons for sort & filter */}
                 <button
                     name="draft"
                     className={`tag rounded-2xl py-1 px-2 text-white ${filterCondition.draft ? "bg-gray-700": "bg-gray-500"} hover:bg-gray-600`}
@@ -72,6 +76,7 @@ export default function MyItemsPage () {
                 className="sm:mx-auto sm:flex sm:flex-wrap sm:justify-center sm:gap-5"
                 layout initial={{opacity: 0, y: 20}} animate={{opacity: 1, y: 0}} transition={{duration: .5}}
             >
+                {/* display recipe cards with map function */}
                 {displayedData.map((d, i) => (
                     <Link to={`/recipes/${d._id}`} state={{ data: d}} onClick={saveScroll} key={i}>
                         <li className='w-70 mx-auto mb-6 bg-gray-50 outline-3 outline-gray-200 rounded-2xl overflow-hidden shadow-md sm:w-60'>

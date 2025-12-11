@@ -18,17 +18,19 @@ function App() {
         <Navbar />
 
         <Routes>
+          {/* "recipes" related paths */}
           <Route path="/" element={<HomePage />}/>
           <Route path='recipes' element={<Index />} />
           <Route path='recipes/:recipeId' element={<Show />} />
           <Route path='recipes/myitems/:userId' element={<MyItemsPage />} />
-          {/* <Route path='recipes/:userId/drafts' element={<DraftPage />} /> */}
           <Route path='recipes/:recipeId/update' element={<UpdateRecipe />} />
           <Route path='recipes/new' element={<CreateRecipe />} />
 
+          {/* "user" related paths */}
           <Route path='user/login' element={<Login />} />
           <Route path='user/register' element={<UserRegister />} />
           
+          {/* path for Not Found */}
           <Route path="*" element={<div className="text-red-600 text-center p-10">404 Not Found</div>} />
         </Routes>
       </BrowserRouter>
