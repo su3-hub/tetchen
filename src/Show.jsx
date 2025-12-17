@@ -27,6 +27,7 @@ export default function Show() {
             try {
                const response = await api.get(`/recipes/${recipeId}`);
                setRecipe(response.data);
+               console.log(typeof response.data.ingredients[0].qty)
                setHowMany(response.data.howManyServe);
             } catch (error) {
                 console.error(error);
@@ -82,16 +83,15 @@ export default function Show() {
                         <h2 className="mx-auto my-3 text-center text-2xl font-bold border-b-2 border-dotted">
                             材料
                             {recipe?.howManyServe && <span className='text-lg ml-3'><SelectNumberInput min={1} max={5} initial={howMany} handleChange={handleQty}/></span>}
-                            </h2>
+                        </h2>
                         {recipe.ingredients?.map((ingredient, i) => (                    
                             <li key={i} className="list-none flex justify-between">
                                 <span className="w-1/2">{ingredient.name}</span>
                                 {ingredient.unit.match(/さじ|匙/) ?
-                                <span className='text-right'>{ingredient.unit}{Math.round(ingredient.qty*howMany/recipe.howManyServe*10)/10}</span>
+                                <span className='text-right'>{ingredient.unit}{recipe.howManyServe ? Math.round(ingredient.qty*howMany/recipe.howManyServe*10)/10: ingredient.qty}</span>
                                 :
-                                <span className='text-right'>{Math.round(ingredient.qty*howMany/recipe.howManyServe*10)/10}{ingredient.unit}</span>
+                                <span className='text-right'>{recipe.howManyServe ? Math.round(ingredient.qty*howMany/recipe.howManyServe*10)/10: ingredient.qty}{ingredient.unit}</span>
                             }
-                                
                             </li>
                         ))}
                     </div>

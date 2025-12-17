@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
 import { motion } from "motion/react";
+import { useAtom } from "jotai";
+import { userAtom } from "./context/jotai.js";
 import Ingredients from "./components/Ingredients";
 import SelectNumberInput from "./components/SelectNumberInput";
 import ProcessForm from "./components/ProcessForm";
@@ -14,6 +16,7 @@ import api from "./utils/axiosInstance.js";
 
 export default function UpdateRecipe({}) {
     const { recipeId } = useParams();
+    const [user, ] = useAtom(userAtom);
     const [isLoading, setIsLoading] = useState(true);
     const [recipe, setRecipe] = useState(initialRecipe);
     const [error, setError] = useState(null);

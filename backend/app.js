@@ -96,7 +96,7 @@ app.use((err, req, res, next) => {
         req.files.forEach(async(f) => {
             await cloudinary.uploader.destroy(f.filename);
         })
-    }
+    };
     if (!err.statusCode) err.statusCode = 500;
     if (!err.message) err.message = '問題が発生しました。お手数ですがやり直しをお願いします。';
     console.log(err)

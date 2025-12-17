@@ -3,10 +3,13 @@ import { useParams, Link } from "react-router";
 import { motion } from "motion/react";
 import useScrollRestoration from "./custom_hooks/useScrollRestoration";
 import { applyFiltersAndSort } from "./utils/actions";
+import { useAtom } from "jotai";
+import { userAtom } from "./context/jotai.js";
 import api from "./utils/axiosInstance";
 
 export default function MyItemsPage () {    
     const { userId } = useParams();
+    const [user,] = useAtom(userAtom);
     const [rawData, setRawData] = useState([]);
     const [displayedData, setDisplayedData] = useState([]);
     const [filterCondition, setFilterCondition] = useState({draft: false, ascending: false});
