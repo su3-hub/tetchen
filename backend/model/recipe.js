@@ -28,9 +28,9 @@ const recipeSchema = new Schema({
         qty: {
             type: String,
         },
-        unit: {
-            type: String,
-        },
+        // unit: {
+        //     type: String,
+        // },
         _id: false,
     }],
     processes: [{
