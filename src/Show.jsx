@@ -15,7 +15,7 @@ export default function Show() {
     const { recipeId } = useParams();
     const [recipe, setRecipe] = useState({});
     const [isLoading, setIsLoading] = useState(false);
-    const [howMany, setHowMany] = useState(null);
+    const [howMany, setHowMany] = useState([]);
     const [showConfirm, setShowConfirm] = useState(false);
     const [error, setError] = useState(null);
     const [user, ] = useAtom(userAtom);
@@ -25,10 +25,9 @@ export default function Show() {
     useEffect(() => {
         async function getSingleData (recipeId) {
             try {
-               const response = await api.get(`/recipes/${recipeId}`);
-               setRecipe(response.data);
-               console.log(typeof response.data.ingredients[0].qty)
-               setHowMany(response.data.howManyServe);
+               const { data } = await api.get(`/recipes/${recipeId}`);
+               setRecipe(data);
+               setHowMany(data.ingredients);
             } catch (error) {
                 console.error(error);
             }
@@ -61,7 +60,14 @@ export default function Show() {
     }
     // Set a variable to change the amount
     const handleQty = e => {
-        setHowMany(e.target.value);
+        const ratio = Number(e.target.value) / Number(recipe.howManyServe);
+        const calced = recipe.ingredients.map(ing => {
+            const qty = ing.qty.replace(/\d+/g, match => {
+                return Math.floor(Number(match)*ratio*10)/10;
+            });
+            return {...ing, qty}
+        });
+        setHowMany(calced);
     };
 
     return (
@@ -82,16 +88,19 @@ export default function Show() {
                     <div className="mx-auto max-w-65">
                         <h2 className="mx-auto my-3 text-center text-2xl font-bold border-b-2 border-dotted">
                             材料
-                            {recipe?.howManyServe && <span className='text-lg ml-3'><SelectNumberInput min={1} max={5} initial={howMany} handleChange={handleQty}/></span>}
+                            {recipe?.howManyServe && <span className='text-lg ml-3'><SelectNumberInput min={1} max={5} initial={recipe.howManyServe} handleChange={handleQty}/></span>}
                         </h2>
-                        {recipe.ingredients?.map((ingredient, i) => (                    
+                        {howMany.map((ingredient, i) => (                    
                             <li key={i} className="list-none flex justify-between">
                                 <span className="w-1/2">{ingredient.name}</span>
-                                {ingredient.unit.match(/さじ|匙/) ?
+                                <span className='text-right'>{
+                                    ingredient.qty
+                                }</span>
+                                {/* {ingredient.unit.match(/さじ|匙/) ?
                                 <span className='text-right'>{ingredient.unit}{recipe.howManyServe ? Math.round(ingredient.qty*howMany/recipe.howManyServe*10)/10: ingredient.qty}</span>
                                 :
                                 <span className='text-right'>{recipe.howManyServe ? Math.round(ingredient.qty*howMany/recipe.howManyServe*10)/10: ingredient.qty}{ingredient.unit}</span>
-                            }
+                            } */}
                             </li>
                         ))}
                     </div>
