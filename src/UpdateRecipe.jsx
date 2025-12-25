@@ -73,7 +73,7 @@ export default function UpdateRecipe({}) {
         } else {
             setRecipe({...recipe, [name]: value})
         }
-        // console.log(recipe);
+        console.log(recipe);
     };
 
     // Registration process.
@@ -94,8 +94,8 @@ export default function UpdateRecipe({}) {
             processDescriptions.push({
                 description: process.description,
                 hasImage: !!(process?.file || process?.imageFilename),
-                url: process?.imageUrl,
-                filename: process?.imageFilename,
+                imageUrl: process?.imageUrl,
+                imageFilename: process?.imageFilename,
             });
             if (process.file) {
                 const fileKey = `processImage-${index}`;
@@ -113,11 +113,12 @@ export default function UpdateRecipe({}) {
         formData.append('howManyServe', recipe.howManyServe);
         formData.append('ingredients', JSON.stringify(recipe.ingredients));
         formData.append('processes', JSON.stringify(processDescriptions));
-        formData.append("supplement", recipe.supplement);
+        formData.append('supplement', recipe.supplement ?? '');
         formData.append('isDraft', isDraft);
-        // for (let [key, value] of formData.entries()) {
-        //     console.log(`${key} : ${value}`);
-        // }
+        for (let [key, value] of formData.entries()) {
+            console.log(`${key} : ${value}`);
+        }
+        console.log(recipe.supplement)
 
         // Put request to backend
         setIsLoading(true);
@@ -148,7 +149,7 @@ export default function UpdateRecipe({}) {
                     id="title" 
                     type="text" 
                     name='title'
-                    defaultValue={recipe.title}
+                    value={recipe.title}
                     placeholder='かんたん塩昆布浅漬け'
                     onChange={handleChangeRecipe}
                     className='w-70 bg-gray-50 rounded-sm border-b-2 border-gray-400 focus:outline-gray-200 mx-auto py-2 px-3 text-2xl'
@@ -163,7 +164,7 @@ export default function UpdateRecipe({}) {
                     name="caption"
                     id="caption"
                     rows={3}
-                    defaultValue={recipe.caption}
+                    value={recipe.caption}
                     placeholder="手間いらず、いつもの食材で簡単な作り置きおかず"
                     onChange={handleChangeRecipe}
                     className='block mx-auto w-full mb-3 p-2 rounded-xl bg-gray-50 outline-1 outline-amber-300 focus:outline-2 focus:outline-amber-500'
@@ -228,7 +229,7 @@ export default function UpdateRecipe({}) {
                 <textarea name="supplement" id="supplement" rows="5"
                     placeholder='※補足欄は任意です。'
                     onChange={handleChangeRecipe}
-                    defaultValue={recipe.supplement}
+                    value={recipe.supplement}
                     className='block mx-auto w-full mb-3 p-2 rounded-xl bg-gray-50 outline-1 outline-amber-300 focus:outline-2 focus:outline-amber-500'
                 ></textarea>
             </div>

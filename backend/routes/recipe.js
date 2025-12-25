@@ -82,10 +82,10 @@ router.route('/:recipeId/update')
                 objToUpdate.processes[index].imageFilename = f.filename;
             }
         });
-        
+        console.log('PROCESSES', objToUpdate.supplement)
         const updatedImages = objToUpdate.processes.map(p => p.imageFilename);
         const originalImages = origin.processes.map(p => p.imageFilename);
-        const diff = originalImages.filter(f => updatedImages.indexOf(f) == -1);
+        const diff = originalImages.filter(f => updatedImages.indexOf(f) === -1);
         for (let d of diff) {cloudinary.uploader.destroy(d)}
 
         const updatedItem = await Recipe.findByIdAndUpdate(req.params.recipeId, objToUpdate, {new: true});

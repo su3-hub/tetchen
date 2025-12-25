@@ -6,7 +6,8 @@ export const initialRecipe = {
         topImageFile: null,
         topImageUrl: '',
         howManyServe: null,
-        ingredients: [{name: '', qty: 0, unit: ''}],
+        ingredients: [{ name: '', qty: '', }],
         processes: [{ description: '', hasImage: false, file: null, imageUrl: null, iamgeFilename: null, tempKey: createUniqueId(),}],
         isDraft: false,
+        supplement: '',
     };

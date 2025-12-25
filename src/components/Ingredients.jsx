@@ -12,7 +12,7 @@ export default function Ingredients ({ingredients, validation, setRecipe}) {
 
     const addInput = () => {
         const newArray = [...ingredients];
-        newArray.push({name:'', qty: 0, unit: ''})
+        newArray.push({name:'', qty: '',})
         setRecipe(prev => {
             return {...prev, ingredients: [...prev.ingredients, {name:'', qty: 0, unit: ''}]}
         })
@@ -34,15 +34,15 @@ export default function Ingredients ({ingredients, validation, setRecipe}) {
                         onChange={(e) => handleChangeIngredient(e, i)}
                         className='ingredient w-34 bg-gray-50 outline-sky-200 outline-2 focus:outline-sky-300 focus:outline-3 rounded-md p-1 text-center'/>                
                     <input type="text" name='qty' 
-                        placeholder='500'
+                        placeholder='500g'
                         defaultValue={ing.qty}
                         onChange={(e) => handleChangeIngredient(e, i)}
-                        className='ingredient w-13 bg-gray-50 outline-sky-200 outline-2 focus:outline-sky-300 focus:outline-3 rounded-md p-1 text-center'/>
-                    <input type="text" name='unit' 
+                        className='ingredient w-26 bg-gray-50 outline-sky-200 outline-2 focus:outline-sky-300 focus:outline-3 rounded-md p-1 text-center'/>
+                    {/* <input type="text" name='unit' 
                         placeholder='グラム'
                         defaultValue={ing.unit}
                         onChange={(e) => handleChangeIngredient(e, i)}
-                        className='ingredient w-12 bg-gray-50 outline-sky-200 outline-2 focus:outline-sky-300 focus:outline-3 rounded-md p-1 text-center'/>
+                        className='ingredient w-12 bg-gray-50 outline-sky-200 outline-2 focus:outline-sky-300 focus:outline-3 rounded-md p-1 text-center'/> */}
                     <div className="content-center">
                     {/* <i className="ri-close-circle-line text-2xl hover:opacity-80 text-red-600"></i> */}
                     <i

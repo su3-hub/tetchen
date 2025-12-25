@@ -83,12 +83,12 @@ export default function CreateRecipe() {
         formData.append('howManyServe', recipe.howManyServe);
         formData.append('ingredients', JSON.stringify(recipe.ingredients));
         formData.append('processes', JSON.stringify(processDescriptions));
-        formData.append("supplement", recipe.supplement);
+        formData.append('supplement', recipe.supplement ?? '');
         formData.append('isDraft', isDraft);
         // for (let [key, value] of formData.entries()) {
         //     console.log(`${key} : ${value}`)
         // }
-
+        console.log(recipe)
         // Post request to backend
         setIsLoading(true);
         try {
@@ -155,7 +155,7 @@ export default function CreateRecipe() {
             <div className="text-xl mb-2 text-center">
                 <h1 className='font-bold text-2xl text-center'>材料</h1>
                 <p className='inline-block mx-auto'>
-                    <SelectNumberInput min={1} max={5} handleChangeRecipe={handleChangeRecipe}/>
+                    <SelectNumberInput min={1} max={5} handleChange={handleChangeRecipe}/>
                 </p>
             </div>
             

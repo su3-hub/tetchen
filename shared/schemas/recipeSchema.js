@@ -15,10 +15,7 @@ export const recipeSchema = z.object({
         name: z.string("食材を入力してください。")
             .min(1, "食材を入力してください。")
             .max(15, "食材名は15文字までです。"),
-        qty: z.coerce.number(),
-        unit: z.string()
-            .min(1, "分量の単位を入力してください。")
-            .max(6, "単位は6文字までです。"),
+        qty: z.string().max(10, "分量は10文字以内です。"),
     })),
     processes: z.array(z.object({
         description: z
