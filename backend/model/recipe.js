@@ -26,7 +26,7 @@ const recipeSchema = new Schema({
             type: String,
         },
         qty: {
-            type: Number,
+            type: String,
         },
         unit: {
             type: String,

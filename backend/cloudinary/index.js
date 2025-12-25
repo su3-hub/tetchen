@@ -16,7 +16,12 @@ const storage = new CloudinaryStorage({
     params: {
         folder: 'tetchen',
         allowedFormats: ['jpeg', 'png', 'jpg'],
-    }
+        transformation: [
+            {width: 1200, crop: 'limit'},
+            {quality: 'auto'},
+            {fetch_format: 'auto'},
+        ],
+    },
 });
 
 export {cloudinary, storage};

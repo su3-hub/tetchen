@@ -63,6 +63,7 @@ export default function UpdateRecipe({}) {
     // Store user inputs depending on input type
     const handleChangeRecipe = e => {
         const { name, value, files } = e.target;
+        console.log('name', name)
         if (files) {
             const file = files[0];
             const imageUrl = URL.createObjectURL(file);
@@ -72,6 +73,7 @@ export default function UpdateRecipe({}) {
         } else {
             setRecipe({...recipe, [name]: value})
         }
+        // console.log(recipe);
     };
 
     // Registration process.
@@ -196,7 +198,7 @@ export default function UpdateRecipe({}) {
                             min={1}
                             max={5}
                             initial={recipe.howManyServe}
-                            handleChangeRecipe={handleChangeRecipe}/>
+                            handleChange={handleChangeRecipe}/>
                     </p>
                 </div>
                 <Ingredients
@@ -226,6 +228,7 @@ export default function UpdateRecipe({}) {
                 <textarea name="supplement" id="supplement" rows="5"
                     placeholder='※補足欄は任意です。'
                     onChange={handleChangeRecipe}
+                    defaultValue={recipe.supplement}
                     className='block mx-auto w-full mb-3 p-2 rounded-xl bg-gray-50 outline-1 outline-amber-300 focus:outline-2 focus:outline-amber-500'
                 ></textarea>
             </div>
